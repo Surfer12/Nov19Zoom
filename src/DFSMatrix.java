@@ -21,7 +21,9 @@ public class DFSMatrix {
   dfs(matrix, visited, row, col + 1);   // right
   dfs(matrix, visited, row, col - 1);  // left
   
-  
-  // Ensure that the number of islands is counted
+    }  
+}
+
+    // Ensure that the number of islands is counted
   
   
