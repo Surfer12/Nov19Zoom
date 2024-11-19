@@ -1,0 +1,52 @@
+sequenceDiagram
+    participant Main
+    participant DFS as DFS Approach
+    participant BFS as BFS Approach
+    participant Grid as Grid State
+    
+    Note over Grid: Example Grid:<br/>1 1 0<br/>1 0 0<br/>0 0 1
+
+    %% DFS Approach
+    rect rgb(200, 230, 200)
+    Note over Main,Grid: DFS Approach
+    Main->>+DFS: findIslands()
+    Note over DFS: Island count = 0
+    
+    DFS->>Grid: Visit (0,0)
+    Note over Grid: Mark (0,0)<br/>Recursively visit:<br/>→(0,1)<br/>→(1,0)
+    
+    DFS->>Grid: Visit (0,1)
+    Note over Grid: Mark (0,1)
+    
+    DFS->>Grid: Visit (1,0)
+    Note over Grid: Mark (1,0)
+    Note over DFS: First island<br/>fully explored
+    
+    DFS->>Grid: Visit (2,2)
+    Note over Grid: Mark (2,2)
+    Note over DFS: Second island<br/>found & explored
+    
+    DFS-->>-Main: Return 2 islands
+    end
+
+    %% BFS Approach
+    rect rgb(230, 200, 200)
+    Note over Main,Grid: BFS Approach
+    Main->>+BFS: findIslands()
+    Note over BFS: Island count = 0
+    
+    BFS->>Grid: Visit (0,0)
+    Note over Grid: Add neighbors to queue:<br/>(0,1), (1,0)
+    
+    BFS->>Grid: Visit (0,1)
+    Note over Grid: Process from queue
+    
+    BFS->>Grid: Visit (1,0)
+    Note over Grid: Process from queue<br/>First island complete
+    
+    BFS->>Grid: Visit (2,2)
+    Note over Grid: No neighbors to add<br/>Second island complete
+    
+    BFS-->>-Main: Return 2 islands
+    end
+

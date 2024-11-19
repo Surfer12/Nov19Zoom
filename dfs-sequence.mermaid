@@ -1,0 +1,40 @@
+sequenceDiagram
+    participant M as Main
+    participant DFS0_0 as DFS(0,0)
+    participant DFS1_0 as DFS(1,0)
+    participant DFS0_1 as DFS(0,1)
+    participant DFS_UP as DFS(-1,0)
+    participant DFS_LEFT as DFS(0,-1)
+    participant DFS2_0 as DFS(2,0)
+
+    Note over M: Matrix:<br/>1 1 0<br/>1 0 1<br/>0 1 1
+
+    M->>+DFS0_0: dfs(matrix, visited, 0, 0)
+    Note over DFS0_0: Check valid: ✓<br/>Mark visited<br/>Process: 1
+
+    %% Down call
+    DFS0_0->>+DFS1_0: dfs(row+1, col)
+    Note over DFS1_0: Check valid: ✓<br/>Mark visited<br/>Process: 1
+    
+    DFS1_0->>+DFS2_0: dfs(row+1, col)
+    Note over DFS2_0: Check valid: ✗<br/>(matrix[2][0] = 0)
+    DFS2_0-->>-DFS1_0: return
+    DFS1_0-->>-DFS0_0: return
+
+    %% Up call
+    DFS0_0->>+DFS_UP: dfs(row-1, col)
+    Note over DFS_UP: Check valid: ✗<br/>(out of bounds)
+    DFS_UP-->>-DFS0_0: return
+
+    %% Right call
+    DFS0_0->>+DFS0_1: dfs(row, col+1)
+    Note over DFS0_1: Check valid: ✓<br/>Mark visited<br/>Process: 1
+    DFS0_1-->>-DFS0_0: return
+
+    %% Left call
+    DFS0_0->>+DFS_LEFT: dfs(row, col-1)
+    Note over DFS_LEFT: Check valid: ✗<br/>(out of bounds)
+    DFS_LEFT-->>-DFS0_0: return
+
+    DFS0_0-->>-M: return
+
