@@ -1,0 +1,66 @@
+sequenceDiagram
+    participant M as Main
+    participant DFS as DFS Controller
+    participant V as Visit Tracker
+    participant R1 as DFS(0,0)
+    participant R2 as DFS(0,1)
+    participant R3 as DFS(1,1)
+
+    %% Recursive DFS
+    rect rgb(200, 230, 255)
+        Note over M,R3: Recursive DFS Implementation
+        
+        M->>+DFS: startDFS(0,0)
+        DFS->>V: initializeVisited()
+        DFS->>+R1: dfsRecursive(0,0)
+        
+        Note over R1: Mark (0,0) visited
+        
+        R1->>+R2: exploreNeighbor(0,1)
+        Note over R2: Mark (0,1) visited
+        
+        R2->>+R3: exploreNeighbor(1,1)
+        Note over R3: Mark (1,1) visited
+        
+        R3-->>-R2: backtrack
+        R2-->>-R1: backtrack
+        R1-->>-DFS: complete
+        DFS-->>-M: return result
+    end
+
+    %% Iterative DFS
+    rect rgb(255, 220, 220)
+        Note over M,R3: Iterative DFS Implementation
+        
+        M->>+DFS: startIterativeDFS(0,0)
+        DFS->>V: initializeVisited()
+        DFS->>DFS: createStack()
+        
+        Note over DFS: Push (0,0)
+        Note over DFS: Mark (0,0) visited
+        
+        loop While stack not empty
+            Note over DFS: Pop current position
+            
+            alt Valid unvisited neighbor
+                Note over DFS: Push neighbor
+                Note over DFS: Mark as visited
+            else No valid neighbors
+                Note over DFS: Continue to next stack item
+            end
+        end
+        
+        DFS-->>M: return result
+    end
+
+    %% Stack State Visualization for Iterative
+    rect rgb(255, 240, 220)
+        Note over M,R3: Stack States in Iterative DFS
+        
+        Note over DFS: Stack: [(0,0)]
+        Note over DFS: Stack: [(0,0), (0,1)]
+        Note over DFS: Stack: [(0,0), (0,1), (1,1)]
+        Note over DFS: Stack: [(0,0), (0,1)]
+        Note over DFS: Stack: [(0,0)]
+        Note over DFS: Stack: []
+    end

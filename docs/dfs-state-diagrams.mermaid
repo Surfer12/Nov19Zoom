@@ -1,0 +1,62 @@
+stateDiagram-v2
+    %% Recursive DFS State Diagram
+    state "Recursive DFS" as RecursiveDFS {
+        [*] --> ValidateInput: Start DFS
+        ValidateInput --> CheckBoundaries: Call DFS(row, col)
+        CheckBoundaries --> ProcessCell: Valid position
+        CheckBoundaries --> ReturnFromCall: Invalid/Visited
+        ProcessCell --> MarkVisited: Process current cell
+        MarkVisited --> RecursiveCall: Explore neighbors
+        RecursiveCall --> CheckBoundaries: For each direction
+        ReturnFromCall --> RecursiveCall: Continue with next direction
+        RecursiveCall --> CompleteExploration: All directions explored
+        CompleteExploration --> [*]: Return to caller
+
+        note right of ProcessCell
+            Depth-first nature:
+            Fully explores one path
+            before backtracking
+        end note
+    }
+
+    %% Iterative DFS State Diagram
+    state "Iterative DFS" as IterativeDFS {
+        [*] --> InitializeStack: Start DFS
+        InitializeStack --> PushInitial: Create empty stack
+        PushInitial --> CheckStack: Push start position
+        
+        state "Stack Processing Loop" as StackLoop {
+            CheckStack --> PopState: Stack not empty
+            CheckStack --> Complete: Stack empty
+            PopState --> ValidateNeighbor: Get current position
+            ValidateNeighbor --> PushNeighbor: Valid & unvisited
+            ValidateNeighbor --> NextNeighbor: Invalid/visited
+            PushNeighbor --> MarkCell: Add to stack
+            MarkCell --> NextNeighbor: Mark as visited
+            NextNeighbor --> ValidateNeighbor: More directions
+            NextNeighbor --> CheckStack: No more directions
+        }
+        
+        Complete --> [*]: End DFS
+
+        note right of StackLoop
+            LIFO behavior:
+            Processes most recently
+            added positions first
+        end note
+    }
+
+    %% Comparison Notes
+    note left of RecursiveDFS
+        Recursive Pattern:
+        - System stack manages state
+        - Natural backtracking
+        - Depth-first progression
+    end note
+
+    note right of IterativeDFS
+        Iterative Pattern:
+        - Explicit stack management
+        - Manual state tracking
+        - LIFO traversal order
+    end note
