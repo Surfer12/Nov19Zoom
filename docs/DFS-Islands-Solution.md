@@ -1,4 +1,4 @@
-java
+```java
 private void exploreIsland(char[][] grid, int row, int col) {
 // Check boundary and land conditions
 if (row < 0 || row >= grid.length ||
@@ -17,6 +17,9 @@ col + direction[1]
 );
 }
 }
+```
+
+```java
 public int numIslands(char[][] grid) {
 if (grid == null || grid.length == 0) {
 return 0;
@@ -32,6 +35,7 @@ exploreIsland(grid, row, col);
 }
 return islands;
 }
+```
 
 #### Recursive DFS Characteristics
 - Uses system call stack for traversal
@@ -40,7 +44,7 @@ return islands;
 - Potential stack overflow for large grids
 
 ### 2. Iterative DFS Approach
-java
+```java
 public int numIslands(char[][] grid) {
 int islands = 0;
 Stack<Position> stack = new Stack<>();
@@ -66,6 +70,7 @@ grid[newRow][newCol] = '0';
 }
 return islands;
 }
+```
 
 #### Iterative DFS Characteristics
 - Explicit stack management
@@ -76,7 +81,7 @@ return islands;
 ## Advanced DFS Patterns
 
 ### 1. Compact State Management
-java
+```java
 private static class CompactState {
 final int encoded; // row and col packed into single int
 final byte dirIndex; // use byte instead of int for direction
@@ -89,7 +94,7 @@ int col() { return encoded & 0xFFFF; }
 }
 
 ### 2. Object Pooling for Optimization
-java
+```java
 private static class StatePool {
 private final Queue<CompactState> pool;
 private final int maxSize;
@@ -102,6 +107,7 @@ CompactState state = pool.poll();
 return state != null ? state : new CompactState(row, col, dirIndex);
 }
 }
+```
 
 ## Performance Considerations
 
@@ -116,14 +122,15 @@ return state != null ? state : new CompactState(row, col, dirIndex);
 ## Optimization Techniques
 
 1. Bit Manipulation for Position Encoding
-java
+```java
 private static int encodePosition(int row, int col, int cols) {
 return row cols + col;
 }
 
 2. Efficient Visited Tracking
-java
+```java
 BitSet visited = new BitSet(rows cols); // Memory efficient visited tracking
+```
 
 ## Conclusion
 Both recursive and iterative DFS solve the Number of Islands problem effectively. The choice depends on:
