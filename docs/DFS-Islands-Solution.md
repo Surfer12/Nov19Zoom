@@ -1,17 +1,94 @@
-# Solving Number of Islands (LeetCode 200) with Depth-First Search
+java
+private void exploreIsland(char[][] grid, int row, int col) {
+// Check boundary and land conditions
+if (row < 0 || row >= grid.length ||
+col < 0 || col >= grid[0].length ||
+grid[row][col] != '1') {
+return;
+}
+// Mark current cell as visited
+grid[row][col] = '0';
+// Recursively explore adjacent cells
+for (int[] direction : DIRECTIONS) {
+exploreIsland(
+grid,
+row + direction[0],
+col + direction[1]
+);
+}
+}
+public int numIslands(char[][] grid) {
+if (grid == null || grid.length == 0) {
+return 0;
+}
+int islands = 0;
+for (int row = 0; row < grid.length; row++) {
+for (int col = 0; col < grid[0].length; col++) {
+if (grid[row][col] == '1') {
+islands++;
+exploreIsland(grid, row, col);
+}
+}
+}
+return islands;
+}
 
-## Problem Overview
-The Number of Islands problem requires counting the number of distinct islands in a 2D grid where:
-- `'1'` represents land
-- `'0'` represents water
-- Islands are formed by connecting adjacent land cells horizontally or vertically
+#### Recursive DFS Characteristics
+- Uses system call stack for traversal
+- Natural depth-first progression
+- Implicit backtracking
+- Potential stack overflow for large grids
 
-### Problem Examples
-1. Single Island Example:
+### 2. Iterative DFS Approach
+java
+public int numIslands(char[][] grid) {
+int islands = 0;
+Stack<Position> stack = new Stack<>();
+for (int row = 0; row < grid.length; row++) {
+for (int col = 0; col < grid[0].length; col++) {
+if (grid[row][col] == '1') {
+islands++;
+stack.push(new Position(row, col));
+grid[row][col] = '0';
+while (!stack.isEmpty()) {
+Position current = stack.pop();
+for (int[] direction : DIRECTIONS) {
+int newRow = current.row + direction[0];
+int newCol = current.col + direction[1];
+if (isValidLandCell(grid, newRow, newCol)) {
+stack.push(new Position(newRow, newCol));
+grid[newRow][newCol] = '0';
+}
+}
+}
+}
+}
+}
+return islands;
+}
 
+#### Iterative DFS Characteristics
+- Explicit stack management
+- More control over traversal
+- Avoids potential stack overflow
+- Slightly more complex implementation
+
+## Advanced DFS Patterns
+
+### 1. Compact State Management
+java
+private static class CompactState {
+final int encoded; // row and col packed into single int
+final byte dirIndex; // use byte instead of int for direction
+CompactState(int row, int col, byte dirIndex) {
+this.encoded = (row << 16) | col; // bit shifting for packing
+this.dirIndex = dirIndex;
+}
+int row() { return encoded >>> 16; }
+int col() { return encoded & 0xFFFF; }
+}
 
 ### 2. Object Pooling for Optimization
-
 java
 private static class StatePool {
 private final Queue<CompactState> pool;
@@ -25,24 +102,6 @@ CompactState state = pool.poll();
 return state != null ? state : new CompactState(row, col, dirIndex);
 }
 }
-
-
-## Visualization of DFS Traversal
-
-### Sequence Diagram
-![DFS Sequence Diagram](dfs-sequence-diagrams.mermaid)
-
-The sequence diagram illustrates the flow of recursive and iterative DFS, showing:
-- Method calls
-- Visited cell tracking
-- Backtracking mechanism
-
-### State Diagram
-![DFS State Diagram](dfs-state-diagrams.mermaid)
-
-The state diagram highlights the key differences between recursive and iterative approaches:
-- Recursive: System stack manages state
-- Iterative: Explicit stack and manual state tracking
 
 ## Performance Considerations
 
@@ -63,6 +122,8 @@ return row cols + col;
 }
 
 2. Efficient Visited Tracking
+java
+BitSet visited = new BitSet(rows cols); // Memory efficient visited tracking
 
 ## Conclusion
 Both recursive and iterative DFS solve the Number of Islands problem effectively. The choice depends on:
@@ -91,12 +152,3 @@ Recommended approach:
 2. Analyze performance with different grid sizes
 3. Experiment with optimization techniques
 4. Understand trade-offs between approaches
-
-This comprehensive markdown document provides an in-depth exploration of solving the Number of Islands problem using Depth-First Search (DFS), incorporating code samples, diagrams, and detailed explanations of various implementation strategies.
-The document covers:
-Problem description
-Recursive and iterative DFS approaches
-Advanced optimization techniques
-Visualization of traversal methods
-Performance considerations
-Key takeaways and recommendations
