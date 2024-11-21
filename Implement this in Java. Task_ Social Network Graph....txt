@@ -1,0 +1,82 @@
+﻿import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Graph {
+
+   // Using an adjacency list to represent the graph
+   private Map<String, List<String>> adjacencyList;
+
+   public Graph() {
+       adjacencyList = new HashMap<>();
+   }
+
+   // Adds a person (vertex) to the network
+   public void addVertex(String name) {
+       if (!adjacencyList.containsKey(name)) {
+           adjacencyList.put(name, new ArrayList<>());
+       }
+   }
+
+   // Adds a friendship connection (edge) between two people
+   public void addEdge(String person1, String person2) {
+       addVertex(person1); // Ensure both people exist
+       addVertex(person2);
+       adjacencyList.get(person1).add(person2);
+       adjacencyList.get(person2).add(person1); // For undirected graph
+   }
+
+   // Checks if two people are friends
+   public boolean areFriends(String person1, String person2) {
+       return adjacencyList.containsKey(person1) &&
+              adjacencyList.get(person1).contains(person2);
+   }
+
+   // Returns a list of friends for a given person
+   public List<String> getFriends(String person) {
+       return adjacencyList.getOrDefault(person, new ArrayList<>());
+   }
+
+   public static void main(String[] args) {
+       Graph socialNetwork = new Graph();
+
+       // Add people to the network
+       socialNetwork.addVertex("Alice");
+       socialNetwork.addVertex("Bob");
+       socialNetwork.addVertex("Charlie");
+       socialNetwork.addVertex("David");
+       socialNetwork.addVertex("Eve");
+
+       // Create friendships
+       socialNetwork.addEdge("Alice", "Bob");
+       socialNetwork.addEdge("Alice", "Charlie");
+       socialNetwork.addEdge("Bob", "David");
+       socialNetwork.addEdge("Charlie", "Eve");
+
+       // Test functionalities
+       System.out.println("Are Alice and Bob friends? " + socialNetwork.areFriends("Alice", "Bob"));
+       System.out.println("Are Alice and Eve friends? " + socialNetwork.areFriends("Alice", "Eve"));
+
+       System.out.println("Alice's friends: " + socialNetwork.getFriends("Alice"));
+       System.out.println("David's friends: " + socialNetwork.getFriends("David"));
+   }
+}
+
+Explanation:
+* Adjacency List: I chose to use an adjacency list because social networks tend to be sparse graphs (people are not friends with everyone else). Adjacency lists are more space-efficient for sparse graphs compared to adjacency matrices.
+* Graph Class:
+   * addVertex(): Adds a person to the adjacencyList. If the person already exists, it does nothing.
+   * addEdge(): Adds an undirected edge between two people by adding each person to the other's friend list.
+   * areFriends(): Checks if person2 is in person1's friend list.
+   * getFriends(): Returns the friend list for a given person.
+* Main Method:
+   * Creates a Graph object.
+   * Adds 5 people as vertices.
+   * Defines friendships (edges) between them.
+   * Tests the graph functionalities by checking friendship and printing friend lists.
+Output:
+Are Alice and Bob friends? true
+Are Alice and Eve friends? false
+Alice's friends: [Bob, Charlie]
+David's friends: [Bob]
