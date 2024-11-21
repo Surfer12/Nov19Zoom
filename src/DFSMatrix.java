@@ -9,7 +9,7 @@ public class DFSMatrix {
     return; 
   }
   
-  // mark the current position as visited
+  
   visited[row][col] = true; 
   
   //process the current cell e.g. print it's value
