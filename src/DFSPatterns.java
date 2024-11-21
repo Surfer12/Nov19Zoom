@@ -173,10 +173,10 @@ public class DFSPatterns {
  */
 class RecursiveTraversal {
     private static final int[][] DIRECTIONS = {
-       int[][] left = {-1, 0}, // left
-       int[][] right = {1, 0}, // right
-       int[][] down = {0, -1}, // down
-       int[][] up = {0, 1} // up
+        {-1, 0},  // up
+        { 0, 1},   // right
+        {1, 0},  // down
+        {0, -1}  // left
     };
     
     /**
