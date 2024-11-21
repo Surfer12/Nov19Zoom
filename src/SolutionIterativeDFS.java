@@ -2,7 +2,10 @@
  * Solution for the Number of Islands problem using iterative Depth-First Search.
  * This approach eliminates recursion by explicitly managing a stack.
  */
-class Solution {
+
+
+import java.util.Stack;
+class SolutionIterativeDFS {
     // Represents a position in the grid
     private static class Position {
         int row, col;
@@ -82,7 +85,7 @@ class Solution {
      * Comprehensive test cases for the iterative DFS solution.
      */
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        SolutionIterativeDFS solution = new SolutionIterativeDFS();
         
         // Test Case 1: Single island
         char[][] grid1 = {
