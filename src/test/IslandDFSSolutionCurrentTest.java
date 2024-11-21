@@ -1,4 +1,6 @@
-public class Test {
+package test;
+
+public class IslandDFSSolutionCurrentTest {
 
     public static void main(String[] args) {
         IslandDFSSolutionCurrent solution = new IslandDFSSolutionCurrent();

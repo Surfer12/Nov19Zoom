@@ -1,7 +1,16 @@
 {
-    "folders": [
-        {
-            "path": ".."
-        }
-    ]
+	"folders": [
+		{
+			"name": "Nov19Zoom",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [
+            "src",
+            "src/test"
+        ],
+		"java.project.outputPath": "bin",
+		"java.project.referencedLibraries": []
+	}
 }
