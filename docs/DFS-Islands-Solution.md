@@ -4,12 +4,10 @@
 ```java
 class IslandDFSSolutionCurrent {
     private static final int[][] DIRECTIONS = {
-        {-1, 0},  // up. In a 2D array, this is the row above the current position.
-        {1, 0},   // down. In a 2D array, this is the row below the current position.
-        {0, -1},  // left. In a 2D array, this is the column to the left of the current position.
-        {0, 1}    // right. In a 2D array, this is the column to the right of the current position.
-
-        // 0 indicates that the column or row index is not changing.
+        {-1, 0},  // up. In a 2D array, this is the row above the current position. // First Direction
+        {1, 0},   // down. In a 2D array, this is the row below the current position. // Second Direction
+        {0, -1},  // left. In a 2D array, this is the column to the left of the current position. // Third Direction
+        {0, 1}    // right. In a 2D array, this is the column to the right of the current position. // Fourth Direction
     };
     /**
      * 
@@ -62,18 +60,30 @@ class IslandDFSSolutionCurrent {
         grid[row][col] = '0';
         
         // Explore all adjacent cells 
-        for (int[] direction : DIRECTIONS) {
+        for (int[] direction : DIRECTIONS) { 
             exploreIsland(
                 grid,
-                row + direction[0], // The row index of the current cell plus the row index of the direction. This is the new row index moving 'up' and 'down'
-                // Once it has moved up it will then move right or left.
-                col + direction[1] // The column index of the current cell plus the column index of the direction. This is the new column index moving 'right' and 'left'
-                row + direction[2], // The row index of the current cell plus the row index of the direction. This is the new row index moving 'up' and 'down'
-                col + direction[3] // The column index of the current cell plus the column index of the direction. This is the new column index moving 'right' and 'left'
+                row + direction[0], // row adjustment
+                col + direction[1] // column adjustment
+                
             );
         }
     }
 }
+
+/* Initial Cell [1][1]
+│
+├── Recursive Call UP    → [0][1]
+│   └── Further exploration
+│
+├── Recursive Call DOWN  → [2][1]
+│   └── Further exploration
+│
+├── Recursive Call LEFT  → [1][0]
+│   └── Further exploration
+│
+└── Recursive Call RIGHT → [1][2]
+    └── Further exploration */
 
 ```java
 public int numIslands(char[][] grid) {
