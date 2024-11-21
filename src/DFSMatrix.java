@@ -1,4 +1,4 @@
-
+/* // notes from professor
 public class DFSMatrix {
     private static void dfs(int[][] matrix, boolean[][] visited, int row, int col) {
   int numRows = matrix.length; 
@@ -16,14 +16,14 @@ public class DFSMatrix {
   System.out.println(matrix[row][col]+ " ");
   
   // recursively visit all adjacent positions i.e adjacent cells 
-  dfs(matrix, visited, row + 1, col);   // down
-  dfs(matrix, visited, row - 1, col);   // up
-  dfs(matrix, visited, row, col + 1);   // right
-  dfs(matrix, visited, row, col - 1);  // left
+  dfs(matrix, visited, row + 1, col);   //right
+  dfs(matrix, visited, row - 1, col);   //left
+  dfs(matrix, visited, row, col + 1);   // up
+  dfs(matrix, visited, row, col - 1);  // down
   
     }  
 }
 
     // Ensure that the number of islands is counted
-  
+   */
   

@@ -4,7 +4,7 @@
  * of distinct islands. An island is surrounded by water and formed by connecting
  * adjacent '1's horizontally or vertically.
  */
-class Solution {
+class IslandDFSSolutionCurrent {
     private static final int[][] DIRECTIONS = {
         {-1, 0},  // up
         {1, 0},   // down
@@ -75,7 +75,7 @@ class Solution {
      * Test cases demonstrating usage of the solution.
      */
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        IslandDFSSolutionCurrent solution = new IslandDFSSolutionCurrent();
         
         // Test Case 1: Single island
         char[][] grid1 = {

@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * Demonstrates different stack management patterns and traversal orders
  * for DFS implementations on a grid.
